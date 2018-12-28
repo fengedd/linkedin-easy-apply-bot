@@ -4,11 +4,38 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 
+class PageObject:
+    def __init__(self, driver):
+        self.__driver = driver
 
-class SignInPage:
-    def __init__(self):
-        self.email_input = login_form.find_element_by_css_selector("input#login-email.login-email")
-        self.pw_input = login_form.find_element_by_css_selector("input#login-password.login-password")
+class SignInPage(PageObject):
+    def __init__(self, driver):
+        # login_form = driver.find_element_by_class_name("login-form")  
+        super().__init__(self, driver)
+        self.email_input = driver.find_element_by_css_selector("input#login-email.login-email")
+        self.pw_input = driver.find_element_by_css_selector("input#login-password.login-password")
+        
+    
+    def enter_email(self, email):
+        self.email_input.clear()
+        self.email_input.send_keys(email)
+
+    def enter_password(self, password):
+        self.pw_input.clear()
+        self.pw_input.send_keys(password)
+
+    def submit(self):
+        self.pw_input.send_keys(Keys.RETURN)
+
+class HomePage(PageObject):
+    def __init__(self, driver):
+        super().__init__(self, driver)
+        self.jobs_button = driver.find_element_by_css_selector("li#jobs-nav-item.nav-item.nav-item--jobs")
+    
+    def click_jobs_button(self):
+        self.jobs_button.click()       
+        
+    
 
 
 print("Webdriver Program Initiated... \n")
@@ -17,27 +44,16 @@ driver.get("https://linkedin.com")
 job_title = "Software Engineer"
 location = "United States"
 
-
 assert "LinkedIn" in driver.title
 try: 
+    #Assert      
+    sign_in_page = SignInPage(driver)      
+    sign_in_page.enter_email(email)
+    sign_in_page.enter_password(pw)
+    sign_in_page.submit()
     #Assert
-    login_form = driver.find_element_by_class_name("login-form")
-    
-    sp = SignInPage()
-   
-    #email_input = login_form.find_element_by_css_selector("input#login-email.login-email")    
-    sp.email_input.clear()
-    sp.email_input.send_keys(email)
-    
-    #pw_input = login_form.find_element_by_css_selector("input#login-password.login-password")
-    sp.pw_input.clear()
-    sp.pw_input.send_keys(pw)    
-    sp.email_input.send_keys(Keys.RETURN)
-
-    #Assert
-    jobs_button = driver.find_element_by_css_selector("li#jobs-nav-item.nav-item.nav-item--jobs")
-    jobs_button.click()
-    
+    home_page = HomePage(driver)
+    home_page.click_jobs_button()    
     #Assert
     jobs_search_box = driver.find_element_by_css_selector("div.jobs-search-box__input.jobs-search-box__input--keyword")
     jobs_search_box_input = jobs_search_box.find_elements_by_tag_name("input")[1]
