@@ -1,4 +1,3 @@
-class PageObject:
-    def __init__(self, driver):
-        super(PageObject, self).__init__
-        self.__driver = driver
+class PageObject(object):
+    def __init__(self, driver):        
+        self.driver = driver
