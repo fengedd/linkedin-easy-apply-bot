@@ -1,10 +1,14 @@
 from .PageObject import PageObject
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+
 class HomePage(PageObject):
     def __init__(self, driver):
-        super(HomePage, self).__init__(driver)
-        self.jobs_button = driver.find_element_by_css_selector(
-            "li#jobs-nav-item.nav-item.nav-item--jobs")
+        super(HomePage, self).__init__(driver)        
+
+    locator_dictionary = {
+        "jobs_button": (By.CSS_SELECTOR, "li#jobs-nav-item.nav-item.nav-item--jobs"),        
+    }    
 
     def click_jobs_button(self):
-        self.jobs_button.click()
+        self.find_element(*self.locator_dictionary["jobs_button"]).click()        
