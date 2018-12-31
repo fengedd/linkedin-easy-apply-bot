@@ -11,4 +11,5 @@ class HomePage(PageObject):
     }    
 
     def click_jobs_button(self):
-        self.find_element(*self.locator_dictionary["jobs_button"]).click()        
+        loc = self.locator_dictionary["jobs_button"]
+        self.wait_click(loc)

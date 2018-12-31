@@ -1,3 +1,12 @@
+#custom
+chromedriver.exe
+easyapply.feature
+environment.py
+failed_scenarios_screenshots/
+pagefactory.py
+steps/
+__init__.py
+
 #vscode
 .vscode
 *.jl

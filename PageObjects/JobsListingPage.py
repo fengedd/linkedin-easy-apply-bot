@@ -17,4 +17,5 @@ class JobsListingPage(PageObject):
     }   
 
     def click_filter_button(self):
-        self.find_element(*self.locator_dictionary["filter_button"]).click()
+        loc = self.locator_dictionary["filter_button"]
+        self.wait_click(loc)        

@@ -14,14 +14,13 @@ class SignInPage(PageObject):
     }   
 
     def click_sign_in_button(self):
-        self.find_element(*self.locator_dictionary["sign_in_button"]).click()
+        loc = self.locator_dictionary["sign_in_button"]
+        self.wait_click(loc)        
 
     def enter_email(self, email):
-        elem = self.find_element(*self.locator_dictionary["email_input"])
-        elem.clear()
-        elem.send_keys(email)     
+        loc = self.locator_dictionary["email_input"]
+        self.wait_text_input(loc, email)        
 
     def enter_password(self, password):
-        elem = self.find_element(*self.locator_dictionary["pw_input"])
-        elem.clear()
-        elem.send_keys(password)   
+        loc = self.locator_dictionary["pw_input"]
+        self.wait_text_input(loc, password)        

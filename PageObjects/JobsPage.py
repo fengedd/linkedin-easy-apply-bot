@@ -12,7 +12,8 @@ class JobsPage(PageObject):
     }   
 
     def click_search_button(self):                
-        self.find_element(*self.locator_dictionary["search_button"]).click()
+        loc = self.locator_dictionary["search_button"]
+        self.wait_click(loc)        
 
     def enter_job(self, job_title):
         elem = self.find_element(*self.locator_dictionary["jobs_search_box_input"])

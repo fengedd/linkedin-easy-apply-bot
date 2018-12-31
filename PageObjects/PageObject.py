@@ -38,3 +38,21 @@ class PageObject(object):
 
     def method_missing(self, what):
         print("No %s here!" % what) 
+    
+    def _wait_for_clickable(self, loc):
+        WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable(loc))
+    
+    def wait_click(self, loc):
+        self._wait_for_clickable(loc)
+        self.find_element(*loc).click()
+    
+    def _wait_for_text(self, loc, text):
+        WebDriverWait(self.driver, 30).until(EC.text_to_be_present_in_element_value(loc, text))
+
+    def wait_text_input(self, loc, text):
+        elem = self.find_element(*loc)
+        elem.clear()        
+        elem.send_keys(text)
+        self._wait_for_text(loc, text)
+
+        
