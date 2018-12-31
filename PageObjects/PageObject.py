@@ -2,6 +2,7 @@ import traceback
 from selenium.common.exceptions import *
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class PageObject(object):
@@ -40,19 +41,27 @@ class PageObject(object):
         print("No %s here!" % what) 
     
     def _wait_for_clickable(self, loc):
-        WebDriverWait(self.driver, 30).until(EC.element_to_be_clickable(loc))
+        try:
+            WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable(loc))
+        except TimeoutException:
+            traceback.print_exc()        
     
     def wait_click(self, loc):
         self._wait_for_clickable(loc)
         self.find_element(*loc).click()
     
-    def _wait_for_text(self, loc, text):
-        WebDriverWait(self.driver, 30).until(EC.text_to_be_present_in_element_value(loc, text))
+    def _wait_for_correct_text_input(self, loc, text):
+        try:
+            WebDriverWait(self.driver, 5).until(EC.text_to_be_present_in_element_value(loc, text))
+        except TimeoutException:
+            self.wait_text_input(loc, text)          
+            print(traceback.print_exc())               
 
-    def wait_text_input(self, loc, text):
+    def wait_text_input(self, loc, text):        
         elem = self.find_element(*loc)
-        elem.clear()        
-        elem.send_keys(text)
-        self._wait_for_text(loc, text)
+        elem.clear()
+        elem.send_keys(text)        
+        self._wait_for_correct_text_input(loc, text)        
+
 
         

@@ -16,11 +16,9 @@ class JobsPage(PageObject):
         self.wait_click(loc)        
 
     def enter_job(self, job_title):
-        elem = self.find_element(*self.locator_dictionary["jobs_search_box_input"])
-        elem.clear()
-        elem.send_keys(job_title)        
+        loc = self.locator_dictionary["jobs_search_box_input"]
+        self.wait_text_input(loc, job_title)        
 
     def enter_location(self, location):
-        elem = self.find_element(*self.locator_dictionary["location_search_box_input"])
-        elem.clear()
-        elem.send_keys(location)
+        loc = self.locator_dictionary["location_search_box_input"]
+        self.wait_text_input(loc, location)
