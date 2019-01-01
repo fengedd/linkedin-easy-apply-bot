@@ -10,29 +10,38 @@ class PageObject(object):
         self.driver = driver
         self.timeout = 30
     
-    def find_element(self, *loc):
+    def find_element(self, *loc):        
         return self.driver.find_element(*loc)
+    
+    def find_elements(self, *loc):
+        return self.driver.find_elements(*loc)
 
     def __getattr__(self, what):        
         try:
             if what in self.locator_dictionary.keys():
                 try:
                     element = WebDriverWait(self.driver, self.timeout).until(
-                    EC.presence_of_element_located(
+                    EC.presence_of_all_elements_located(
                         self.locator_dictionary[what])
                 )
                 except(TimeoutException, StaleElementReferenceException):
                     traceback.print_exc()
-
                 try:
                     element = WebDriverWait(self.driver, self.timeout).until(
-                    EC.visibility_of_element_located(
+                    EC.visibility_of_all_elements_located(
                         self.locator_dictionary[what])
                 )
                 except(TimeoutException, StaleElementReferenceException):
                     traceback.print_exc()
-            # I could have returned element, however because of lazy loading, I am seeking the element before return
-            return self.find_element(*self.locator_dictionary[what])            
+            
+            if "multi" in what:                
+                return self.find_elements(*self.locator_dictionary[what])
+            else:
+                print("Reached")
+                # I could have returned element, however because of lazy loading, I am seeking the element before return
+                return self.find_element(*self.locator_dictionary[what])            
+
+            
         except AttributeError:
             raise AttributeError
             #super(PageObject, self).__getattribute__("method_missing")(what)
@@ -44,11 +53,12 @@ class PageObject(object):
         try:
             WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable(loc))
         except TimeoutException:
-            traceback.print_exc()        
-    
+            traceback.print_exc()
+                
     def wait_click(self, loc):
         self._wait_for_clickable(loc)
         self.find_element(*loc).click()
+        
     
     def _wait_for_correct_text_input(self, loc, text):
         try:
@@ -61,7 +71,4 @@ class PageObject(object):
         elem = self.find_element(*loc)
         elem.clear()
         elem.send_keys(text)        
-        self._wait_for_correct_text_input(loc, text)        
-
-
-        
+        self._wait_for_correct_text_input(loc, text)
