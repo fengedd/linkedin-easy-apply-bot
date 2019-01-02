@@ -50,8 +50,7 @@ class JobsListingPage(PageObject):
     def __init__(self, driver):
         super().__init__(driver)
         #jobs_pane = "ul.jobs-search-results__list"  
-        #pagination_buttons = "section.search-results-pagination-section ol>li>ol>li"         
-         
+        #pagination_buttons = "section.search-results-pagination-section ol>li>ol>li" 
         # New window is opened
         # easy_apply_phone_num = "input[autocomplete=\"tel-national\"]"
         # work_authorization_inputs = "div.work-authorization-group input" ##buttons 2 and 3
@@ -61,7 +60,7 @@ class JobsListingPage(PageObject):
     
     locator_dictionary = {
         "filter_button": (By.CSS_SELECTOR, "button[data-control-name=\"all_filters\"]"),        
-        "listings_multi": (By.CSS_SELECTOR, "ul.jobs-search-results__list li.occludable-update > div"),
+        "listings_multi": (By.CSS_SELECTOR, "ul.jobs-search-results__list li.occludable-update > div a.job-card-search__link-wrapper"),
         "one_click_apply_close_window_button": (By.CSS_SELECTOR, "button.artdeco-dismiss"),                
         "next_page_button": (By.CSS_SELECTOR, "section.search-results-pagination-section ol>li>ol>li.active + li"),       
 
@@ -74,6 +73,10 @@ class JobsListingPage(PageObject):
     def get_listings(self):
         loc = self.locator_dictionary["listings_multi"]                
         return self.find_elements(*loc)
+    
+    def click_given_listing(self, num):
+        loc = self.get_listings()[num]
+        self.wait_click(loc)
     
     def go_next_page(self):
         loc = self.locator_dictionary["next_page_button"]
