@@ -6,6 +6,8 @@ failed_scenarios_screenshots/
 pagefactory.py
 steps/
 __init__.py
+driver.py
+util.py
 
 #vscode
 .vscode
