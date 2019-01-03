@@ -16,7 +16,7 @@ class JobsPage(PageObject):
 
     def click_search_button(self):                
         loc = self.locator_dictionary["search_button"]
-        self.wait_click(loc)
+        self.wait_click_loc(loc)
         WebDriverWait(self.driver, 5).until(EC.url_changes)        
 
     def enter_job(self, job_title):

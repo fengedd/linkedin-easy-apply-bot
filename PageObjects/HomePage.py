@@ -12,4 +12,4 @@ class HomePage(PageObject):
 
     def click_jobs_button(self):
         loc = self.locator_dictionary["jobs_button"]
-        self.wait_click(loc)
+        self.wait_click_loc(loc)

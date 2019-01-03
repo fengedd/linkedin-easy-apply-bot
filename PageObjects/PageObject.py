@@ -49,16 +49,27 @@ class PageObject(object):
     def method_missing(self, what):
         print("No %s here!" % what) 
     
-    def _wait_for_clickable(self, loc):
+    def _wait_for_clickable_loc(self, loc):
         try:
             WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable(loc))
         except TimeoutException:
             traceback.print_exc()
-                
-    def wait_click(self, loc):
-        self._wait_for_clickable(loc)
+    '''
+    def _wait_for_clickable_ele(self, ele):
+        try:
+            WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable())
+        except TimeoutException:
+            traceback.print_exc()
+    '''
+
+
+    def wait_click_loc(self, loc):
+        self._wait_for_clickable_loc(loc)
         self.find_element(*loc).click()
-        
+    
+    def wait_click_ele(self, ele):
+        self._wait_for_clickable_loc(ele)
+        ele.click()        
     
     def _wait_for_correct_text_input(self, loc, text):
         try:

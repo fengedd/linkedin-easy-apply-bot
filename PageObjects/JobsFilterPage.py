@@ -35,35 +35,35 @@ class JobsFilterPage(PageObject):
 
     def click_apply_filter_button(self):
         loc = self.locator_dictionary["apply_filter_button"]
-        self.wait_click(loc)
+        self.wait_click_loc(loc)
         return self
 
     def click_easy_apply(self):
         loc = self.locator_dictionary["easy_apply_box"]
-        self.wait_click(loc)
+        self.wait_click_loc(loc)
         return self
 
     def click_in_network(self):
         loc = self.locator_dictionary["in_network_box"]
-        self.wait_click(loc)
+        self.wait_click_loc(loc)
         return self
 
     def click_under_10_applicants(self):
         loc = self.locator_dictionary["under_10_applicants_box"]
-        self.wait_click(loc)
+        self.wait_click_loc(loc)
         return self
 
     def click_exp_intership(self):
         loc = self.locator_dictionary["exp_internship_box"]
-        self.wait_click(loc)
+        self.wait_click_loc(loc)
         return self
 
     def click_entry_level(self):
         loc = self.locator_dictionary["entry_level_box"]
-        self.wait_click(loc)
+        self.wait_click_loc(loc)
         return self
 
     def click_associate(self):
         loc = self.locator_dictionary["associate_box"]
-        self.wait_click(loc)
+        self.wait_click_loc(loc)
         return self

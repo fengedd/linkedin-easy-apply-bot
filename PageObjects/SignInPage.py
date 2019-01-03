@@ -15,7 +15,7 @@ class SignInPage(PageObject):
 
     def click_sign_in_button(self):
         loc = self.locator_dictionary["sign_in_button"]
-        self.wait_click(loc)        
+        self.wait_click_loc(loc)        
 
     def enter_email(self, email):
         loc = self.locator_dictionary["email_input"]
